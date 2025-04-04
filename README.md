@@ -13,7 +13,7 @@ A state-of-the-art multimodal market intelligence system that analyzes consumer 
 
 ## System Architecture
 
-![System Architecture](architecture.png)
+![System Architecture](architecture_flow.png)
 
 The system follows a modular architecture with four key layers:
 
