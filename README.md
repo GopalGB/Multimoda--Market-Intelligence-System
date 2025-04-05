@@ -1,4 +1,4 @@
-# Multimoda- Market-Intelligence-System
+# Multimodal- Market-Intelligence-System
  
 # Nielsen Market Intelligence System
 
