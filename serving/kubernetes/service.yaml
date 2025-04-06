@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: caip-audience-intelligence
+  namespace: nielsen-ai
+  labels:
+    app: caip-audience-intelligence
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/path: "/metrics"
+    prometheus.io/port: "8000"
+spec:
+  selector:
+    app: caip-audience-intelligence
+  ports:
+  - port: 80
+    targetPort: 8000
+    protocol: TCP
+    name: http
+  type: ClusterIP

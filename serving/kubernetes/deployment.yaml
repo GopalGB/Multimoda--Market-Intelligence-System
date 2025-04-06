@@ -1,0 +1,108 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: caip-audience-intelligence
+  namespace: nielsen-ai
+  labels:
+    app: caip-audience-intelligence
+    component: ray-serve
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: caip-audience-intelligence
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: caip-audience-intelligence
+        component: ray-serve
+    spec:
+      containers:
+      - name: ray-serve
+        image: nielsen/caip-audience-intelligence:v1.0.0
+        imagePullPolicy: IfNotPresent
+        command: ["python", "-m", "serving.ray_serve"]
+        ports:
+        - containerPort: 8000
+          name: http
+        resources:
+          requests:
+            cpu: "2"
+            memory: "8Gi"
+            nvidia.com/gpu: "1"
+          limits:
+            cpu: "4"
+            memory: "16Gi"
+            nvidia.com/gpu: "1"
+        env:
+        - name: HTTP_HOST
+          value: "0.0.0.0"
+        - name: HTTP_PORT
+          value: "8000"
+        - name: FUSION_MODEL_PATH
+          value: "/models/fusion_model.pt"
+        - name: CAUSAL_MODEL_PATH
+          value: "/models/causal_model.pt"
+        - name: MODEL_CACHE_DIR
+          value: "/cache"
+        - name: DEVICE
+          value: "cuda"
+        - name: LOG_LEVEL
+          value: "INFO"
+        volumeMounts:
+        - name: models-volume
+          mountPath: /models
+        - name: cache-volume
+          mountPath: /cache
+        - name: logs-volume
+          mountPath: /app/logs
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 8000
+          initialDelaySeconds: 120
+          periodSeconds: 15
+          timeoutSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 8000
+          initialDelaySeconds: 180
+          periodSeconds: 30
+          timeoutSeconds: 10
+          successThreshold: 1
+          failureThreshold: 5
+      volumes:
+      - name: models-volume
+        persistentVolumeClaim:
+          claimName: caip-models-pvc
+      - name: cache-volume
+        emptyDir: {}
+      - name: logs-volume
+        emptyDir: {}
+      nodeSelector:
+        accelerator: nvidia-tesla-t4
+      tolerations:
+      - key: "nvidia.com/gpu"
+        operator: "Exists"
+        effect: "NoSchedule"
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: caip-models-pvc
+  namespace: nielsen-ai
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: standard
