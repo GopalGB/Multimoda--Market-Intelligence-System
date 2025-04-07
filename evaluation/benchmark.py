@@ -1062,3 +1062,8 @@ class CausalModelBenchmark:
         
         # Save figure
         plt.savefig(os.path.join(self.output_dir, "effect_estimation.png"))
+        
+        
+        
+        
+        jhefbksejbfkjwaebfwaefeoi
