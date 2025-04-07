@@ -7,11 +7,11 @@ for effective multimodal learning.
 """
 
 from models.fusion.fusion_model import MultimodalFusionModel, FusionTypes
-from models.fusion.cross_attention import CrossAttention, MultiHeadAttention
+from models.fusion.cross_attention import CrossModalTransformer, CrossModalTransformerLayer
 
 __all__ = [
     'MultimodalFusionModel',
     'FusionTypes',
-    'CrossAttention',
-    'MultiHeadAttention'
+    'CrossModalTransformer',
+    'CrossModalTransformerLayer'
 ]
