@@ -1,0 +1,15 @@
+2025-04-09 17:42:31,593 - integration-test-runner - INFO - Running integration tests from modules: tests.integration.test_end_to_end
+2025-04-09 19:17:37,958 - integration-test-runner - INFO - Running integration tests from modules: tests.integration.test_end_to_end
+2025-04-09 19:17:50,775 - integration-test-runner - INFO - Test results saved to validation_results/test_results.json
+2025-04-09 19:18:40,168 - integration-test-runner - INFO - Running integration tests from modules: tests.integration.test_end_to_end
+2025-04-09 19:18:52,372 - integration-test-runner - INFO - Test results saved to validation_results/test_results.json
+2025-04-09 19:19:11,204 - integration-test-runner - INFO - Running integration tests from modules: tests.integration.test_end_to_end
+2025-04-09 19:19:22,256 - integration-test-runner - INFO - Test results saved to validation_results/test_results.json
+2025-04-09 19:20:09,852 - integration-test-runner - INFO - Running integration tests from modules: tests.integration.test_end_to_end
+2025-04-09 19:20:21,095 - integration-test-runner - INFO - Test results saved to my_validation_results/test_results.json
+2025-04-09 19:21:13,292 - integration-test-runner - INFO - Running integration tests from modules: tests.integration.test_end_to_end
+2025-04-09 19:21:25,257 - integration-test-runner - INFO - Test results saved to validation_results/test_results.json
+2025-04-09 19:40:31,897 - integration-test-runner - INFO - Running integration tests from modules: tests.integration.test_end_to_end
+2025-04-09 19:40:44,438 - integration-test-runner - INFO - Test results saved to validation_results/test_results.json
+2025-04-09 19:41:42,681 - integration-test-runner - INFO - Running integration tests from modules: tests.integration.test_end_to_end
+2025-04-09 19:41:57,402 - integration-test-runner - INFO - Test results saved to validation_results/test_results.json

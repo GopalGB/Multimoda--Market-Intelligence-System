@@ -1,0 +1,96 @@
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>CAIP Platform Validation Report</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 20px; }
+            h1, h2, h3 { color: #333; }
+            .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+            .passed { background-color: #dff0d8; }
+            .failed { background-color: #f2dede; }
+            .metric { margin: 10px 0; }
+            .metric span { font-weight: bold; }
+            table { border-collapse: collapse; width: 100%; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+            th { background-color: #f2f2f2; }
+            tr:nth-child(even) { background-color: #f9f9f9; }
+        </style>
+    </head>
+    <body>
+        <h1>Cross-Modal Audience Intelligence Platform Validation Report</h1>
+        <p>Generated on: 2025-04-09T19:20:52.024330</p>
+        
+        <div class="section failed">
+            <h2>Overall Status: FAILED</h2>
+            <div class="metric">
+                <span>Platform Version:</span> 1.0.0
+            </div>
+            <div class="metric">
+                <span>Platform:</span> darwin
+            </div>
+            <div class="metric">
+                <span>Python Version:</span> 3.11.6 (main, May 21 2024, 15:22:48) [Clang 15.0.0 (clang-1500.3.9.4)]
+            </div>
+        </div>
+        
+        <div class="section failed">
+            <h2>Unit Tests</h2>
+            <div class="metric">
+                <span>Total Tests:</span> 19
+            </div>
+            <div class="metric">
+                <span>Passed:</span> 14
+            </div>
+            <div class="metric">
+                <span>Failures:</span> 2
+            </div>
+            <div class="metric">
+                <span>Errors:</span> 3
+            </div>
+            <div class="metric">
+                <span>Duration:</span> 1.160988 seconds
+            </div>
+        </div>
+        
+        <div class="section failed">
+            <h2>Integration Tests</h2>
+            <div class="metric">
+                <span>Status:</span> FAILED
+            </div>
+        </div>
+        
+        <div class="section failed">
+            <h2>API Tests</h2>
+            <div class="metric">
+                <span>Success Rate:</span> 0%
+            </div>
+            
+            <h3>Endpoint Results</h3>
+            <table>
+                <tr>
+                    <th>Endpoint</th>
+                    <th>Method</th>
+                    <th>URL</th>
+                    <th>Status</th>
+                    <th>Status Code</th>
+                </tr>
+    
+            </table>
+        </div>
+        
+        <div class="section">
+            <h2>Recommendations</h2>
+            <ul>
+    
+                <li>Fix the 2 unit test failures</li>
+        
+                <li>Fix the 3 unit test errors</li>
+        
+                <li>Investigate integration test failures</li>
+        
+            </ul>
+        </div>
+    </body>
+    </html>
+    

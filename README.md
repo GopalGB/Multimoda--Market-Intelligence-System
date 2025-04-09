@@ -1,134 +1,235 @@
 # Cross-Modal Audience Intelligence Platform (CAIP)
 
-A sophisticated multimodal AI system that fuses text, image, and structured data to derive actionable insights on audience engagement. The platform leverages state-of-the-art deep learning models, causal inference, and retrieval-augmented generation to provide accurate predictions and meaningful explanations.
+![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![Python](https://img.shields.io/badge/python-3.9+-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-## Key Features
+A comprehensive multimodal AI system that leverages visual, textual, and structured data to identify **causal drivers** of viewer engagement. CAIP combines state-of-the-art deep learning models with causal inference techniques to provide actionable insights for content creators and marketers.
 
-- **Multimodal Fusion**: Combines CLIP (visual features) and RoBERTa (text features) via a custom cross-attention transformer for comprehensive content analysis
-- **Causal Inference**: Identifies true drivers of audience engagement using structural causal models to differentiate causation from correlation
-- **Retrieval-Augmented Generation**: Enhances content insights with a hybrid RAG system that combines dense and sparse retrieval
-- **Production-Ready Serving**: Optimized inference through ONNX, TorchScript, and quantization techniques
-- **Explainable AI**: Provides counterfactual explanations and feature attribution for interpretable predictions
+## 🔍 Overview
 
-## Architecture
+The Cross-Modal Audience Intelligence Platform (CAIP) is designed to:
 
-The CAIP system consists of the following components:
+1. **Analyze content** across multiple modalities (text, image, metadata)
+2. **Identify causal factors** that drive audience engagement
+3. **Predict counterfactual outcomes** for content modifications
+4. **Recommend optimizations** to maximize viewer engagement
+5. **Explain results** through transparent causal relationships
 
-- **Data Layer**: Connectors for streaming platforms, social media, and proprietary panel data
-- **Preprocessing Layer**: Feature extraction, normalization, and integration across modalities
-- **Model Layer**: Multimodal fusion models combining visual and textual features
-- **Causal Layer**: Structural causal models for identifying causal relationships
-- **RAG Layer**: Retrieval and generation components for context-aware insights
-- **Serving Layer**: FastAPI and Ray Serve deployments for scalable inference
+## 🏗️ Architecture
 
-## Installation
+CAIP consists of several interconnected components:
 
-```bash
-# Clone the repository
-git clone https://github.com/nielsen/audience-intelligence.git
-cd audience-intelligence
-
-# Install with basic dependencies
-pip install -e .
-
-# Install with development tools
-pip install -e ".[dev]"
-
-# Install with GPU support
-pip install -e ".[gpu]"
-
-# Install with causal inference tools
-pip install -e ".[causal]"
+```
+┌────────────────┐    ┌─────────────────┐    ┌───────────────────┐
+│ Data Pipeline  │───▶│  Model Pipeline  │───▶│  Causal Pipeline  │
+└────────────────┘    └─────────────────┘    └───────────────────┘
+        │                     │                        │
+        │                     │                        │
+        ▼                     ▼                        ▼
+┌────────────────┐    ┌─────────────────┐    ┌───────────────────┐
+│ Preprocessing  │    │ Fusion Models   │    │ Structural Models │
+└────────────────┘    └─────────────────┘    └───────────────────┘
+                                │
+                                │
+                                ▼
+                      ┌─────────────────┐    ┌───────────────────┐
+                      │   API Server    │◀───│     RAG System    │
+                      └─────────────────┘    └───────────────────┘
 ```
 
-## Quick Start
+### Key Components:
 
-### Prediction API
+- **Data Layer**: Connectors to various data sources, preprocessing pipelines, and feature engineering
+- **Model Layer**: Visual models (CLIP), text models (RoBERTa), and multimodal fusion models
+- **Causal Layer**: Structural causal models, counterfactual analysis, and causal feature identification
+- **RAG System**: Retrieval-augmented generation for content recommendations and explanations
+- **Serving Layer**: REST API, model serving infrastructure, and containerized deployment
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Python 3.9+
+- Docker and Docker Compose (for containerized deployment)
+- CUDA-compatible GPU (recommended for training)
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/cross_modal_audience_platform.git
+   cd cross_modal_audience_platform
+   ```
+
+2. Set up the environment and install dependencies:
+   ```bash
+   ./run_local.sh setup
+   ```
+
+3. Run tests to verify your installation:
+   ```bash
+   ./run_local.sh test
+   ```
+
+## 🛠️ Development Workflow
+
+CAIP uses a modular architecture with well-defined interfaces between components. The development workflow is streamlined using the `run_local.sh` script:
 
 ```bash
-# Start the FastAPI server
-python -m serving.api
+# Run all unit tests
+./run_local.sh test
 
-# Or use Ray Serve for distributed deployment
-python -m serving.ray_serve
+# Run integration tests
+./run_local.sh integration
+
+# Run causal tests with specific configuration
+./run_local.sh causal --config complex
+
+# Collect training data
+./run_local.sh collect --limit 1000
+
+# Fine-tune the model
+./run_local.sh finetune --epochs 10
+
+# Start API server locally
+./run_local.sh api
+
+# Start API using Docker
+./run_local.sh docker
 ```
 
-### Python Client
+For more options, run:
+```bash
+./run_local.sh help
+```
+
+## 📊 Causal Analysis
+
+CAIP employs a structured approach to causal analysis:
+
+1. **Feature Identification**: Extract relevant features from visual and textual content
+2. **Causal Discovery**: Learn the causal graph structure from observational data
+3. **Effect Estimation**: Quantify the causal effect of content features on engagement
+4. **Counterfactual Analysis**: Predict engagement under hypothetical content modifications
+5. **Recommendation Generation**: Suggest content changes to optimize engagement
+
+## 🔄 Fine-tuning Pipeline
+
+To fine-tune models on your own data:
+
+1. Collect data:
+   ```bash
+   ./run_local.sh collect --source your_data_source --limit 5000
+   ```
+
+2. Fine-tune the model:
+   ```bash
+   ./run_local.sh finetune --config configs/fine_tuning.yaml
+   ```
+
+3. Evaluate the fine-tuned model:
+   ```bash
+   python scripts/evaluate_model.py --model-path models/saved/fusion_model_best.pt
+   ```
+
+## 🖥️ API Usage
+
+Once the API server is running, you can interact with it using HTTP requests:
 
 ```python
 import requests
 import json
-import base64
-from PIL import Image
-import io
 
-# Encode image to base64
-def encode_image(image_path):
-    with open(image_path, "rb") as f:
-        return base64.b64encode(f.read()).decode("utf-8")
-
-# Predict engagement
-def predict_engagement(text, image_path=None):
-    url = "http://localhost:8000/api/v1/predict/engagement"
-    
-    payload = {
-        "text_content": text,
+# Analyze content
+response = requests.post(
+    "http://localhost:5000/api/v1/analyze",
+    headers={"Authorization": f"Bearer {api_key}"},
+    json={
+        "text": "Exciting new product launch!",
+        "image_url": "https://example.com/product_image.jpg",
+        "metadata": {"category": "technology", "target_audience": "professionals"}
     }
-    
-    if image_path:
-        payload["visual_content_url"] = image_path
-    
-    response = requests.post(url, json=payload)
-    return response.json()
+)
 
-# Example usage
-text = "New streaming series explores artificial intelligence in modern society"
-image_path = "path/to/show_thumbnail.jpg"
-result = predict_engagement(text, image_path)
-print(f"Engagement prediction: {result['engagement_prediction']}")
+# Parse results
+results = response.json()
+print(json.dumps(results, indent=2))
 ```
 
-## Documentation
+## 📁 Project Structure
 
-For full documentation, visit [docs/](docs/) or see the specific component guides:
+```
+.
+├── causal/                  # Causal inference modules
+├── data/                    # Data processing pipeline
+│   ├── connectors/          # Data source connectors
+│   └── preprocessing/       # Data preprocessing modules
+├── evaluation/              # Evaluation metrics and benchmarks
+├── models/                  # Machine learning models
+│   ├── fusion/              # Multimodal fusion models
+│   ├── text/                # Text models (RoBERTa)
+│   └── visual/              # Visual models (CLIP)
+├── notebooks/               # Jupyter notebooks for analysis
+├── rag/                     # Retrieval-augmented generation
+├── serving/                 # API and deployment components
+│   └── kubernetes/          # Kubernetes deployment configs
+├── tests/                   # Test suites
+│   └── integration/         # Integration tests
+├── scripts/                 # Utility scripts
+├── configs/                 # Configuration files
+├── requirements.txt         # Python dependencies
+├── run_local.sh             # Local development script
+└── README.md                # This file
+```
 
-- [Data Connectors](docs/data-connectors.md)
-- [Model Architecture](docs/model-architecture.md)
-- [Causal Inference](docs/causal-inference.md)
-- [RAG System](docs/rag-system.md)
-- [Deployment Guide](docs/deployment.md)
+## 🧪 Testing
 
-## Notebooks
+CAIP includes comprehensive test suites:
 
-Explore our Jupyter notebooks for examples and analysis:
+- **Unit Tests**: Test individual components
+- **Integration Tests**: Test component interactions
+- **Causal Tests**: Validate causal discovery and inference
+- **Benchmark Tests**: Measure performance and scalability
 
-- [Data Exploration](notebooks/data_exploration.ipynb): Analyze audience data patterns
-- [Model Training](notebooks/model_training.ipynb): Train and evaluate fusion models
-- [Causal Analysis](notebooks/causal_analysis.ipynb): Discover causal relationships in audience behavior
+Run tests using:
+```bash
+./run_local.sh test         # Unit tests
+./run_local.sh integration  # Integration tests
+./run_local.sh causal       # Causal tests
+```
 
-## Testing
+## 🚢 Deployment
+
+### Docker Deployment
+
+Deploy the API server using Docker:
 
 ```bash
-# Run all tests
-pytest
-
-# Run tests with coverage
-pytest --cov=.
+./run_local.sh docker
 ```
 
-## Citation
+### Kubernetes Deployment
 
-If you use CAIP in your research, please cite our paper:
+For production deployment on Kubernetes:
 
-```
-@article{nielsen2023caip,
-  title={Cross-Modal Audience Intelligence: Multimodal Modeling of Content Engagement},
-  author={Nielsen AI Team},
-  journal={Proceedings of the Conference on Applied AI},
-  year={2023}
-}
+```bash
+kubectl apply -f serving/kubernetes/
 ```
 
-## License
+## 📚 Contributing
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🙏 Acknowledgments
+
+- Inspired by production systems used at Nielsen
+- Built with state-of-the-art open-source libraries and models

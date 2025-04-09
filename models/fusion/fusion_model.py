@@ -2,9 +2,18 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from typing import Dict, List, Tuple, Any, Optional, Union
+from typing import Dict, List, Tuple, Any, Optional, Union, Literal
 import numpy as np
+from enum import Enum
 from .cross_attention import CrossModalTransformer
+
+class FusionTypes(str, Enum):
+    """Enumeration of supported fusion types for multimodal models."""
+    CROSS_ATTENTION = "cross_attention"
+    CONCATENATION = "concatenation" 
+    ADDITION = "addition"
+    MULTIPLICATION = "multiplication"
+    GATED = "gated"
 
 class MultimodalFusionModel(nn.Module):
     """
@@ -22,6 +31,7 @@ class MultimodalFusionModel(nn.Module):
         dropout: float = 0.1,
         num_engagement_classes: int = 5,  # For engagement level prediction
         engagement_type: str = "classification",  # "classification" or "regression"
+        fusion_type: Union[FusionTypes, str] = FusionTypes.CROSS_ATTENTION,
         device: Optional[str] = None
     ):
         """
@@ -37,6 +47,7 @@ class MultimodalFusionModel(nn.Module):
             dropout: Dropout probability
             num_engagement_classes: Number of engagement level classes
             engagement_type: Type of engagement prediction task
+            fusion_type: Type of fusion mechanism
             device: Device to run the model on
         """
         super().__init__()
@@ -49,6 +60,12 @@ class MultimodalFusionModel(nn.Module):
             
         self.engagement_type = engagement_type
         self.num_engagement_classes = num_engagement_classes
+        
+        # Save fusion type
+        if isinstance(fusion_type, str):
+            self.fusion_type = fusion_type
+        else:
+            self.fusion_type = fusion_type.value
         
         # Cross-modal transformer for fusion
         self.fusion_transformer = CrossModalTransformer(
@@ -324,7 +341,8 @@ class MultimodalFusionModel(nn.Module):
                 "fusion_dim": self.fusion_transformer.fusion_output[0].in_features // 2,
                 "num_layers": len(self.fusion_transformer.layers),
                 "num_heads": self.fusion_transformer.layers[0].visual_self_attn.num_heads,
-                "engagement_type": self.engagement_type
+                "engagement_type": self.engagement_type,
+                "fusion_type": self.fusion_type
             }
         }, path)
     
@@ -342,9 +360,16 @@ class MultimodalFusionModel(nn.Module):
         """
         checkpoint = torch.load(path, map_location=device)
         
+        # Create a config dictionary from the checkpoint
+        config = checkpoint["config"].copy()
+        
+        # Add fusion_type if it's missing in older checkpoint versions
+        if "fusion_type" not in config:
+            config["fusion_type"] = FusionTypes.CROSS_ATTENTION.value
+        
         # Create model with saved configuration
         model = cls(
-            **checkpoint["config"],
+            **config,
             device=device
         )
         

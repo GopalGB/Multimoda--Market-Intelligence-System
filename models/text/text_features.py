@@ -10,6 +10,18 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from collections import Counter
 import spacy
 import string
+from enum import Enum
+
+class TextFeatureTypes(Enum):
+    """Enumeration of available text feature types."""
+    EMBEDDINGS = "embeddings"
+    LINGUISTIC = "linguistic"
+    SENTIMENT = "sentiment"
+    KEYWORDS = "keywords"
+    ENTITIES = "entities"
+    ENGAGEMENT = "engagement"
+    READABILITY = "readability"
+    ALL = "all"
 
 class TextFeatureExtractor:
     """

@@ -1,0 +1,731 @@
+2025-04-09 19:17:15,206 - platform-validator - INFO - Running unit tests...
+2025-04-09 19:17:31,492 - faiss.loader - INFO - Loading faiss.
+2025-04-09 19:17:31,840 - faiss.loader - INFO - Successfully loaded faiss.
+2025-04-09 19:17:31,845 - faiss - INFO - Failed to load GPU Faiss: name 'GpuIndexIVFFlat' is not defined. Will not load constructor refs for GPU indexes.
+2025-04-09 19:17:37,823 - rag.retriever - INFO - Loading retrieval model: sentence-transformers/all-MiniLM-L6-v2
+2025-04-09 19:17:37,824 - rag.retriever - INFO - Retrieval model sentence-transformers/all-MiniLM-L6-v2 loaded successfully
+2025-04-09 19:17:37,829 - rag.retriever - INFO - Loading retrieval model: sentence-transformers/all-MiniLM-L6-v2
+2025-04-09 19:17:37,830 - rag.retriever - INFO - Retrieval model sentence-transformers/all-MiniLM-L6-v2 loaded successfully
+2025-04-09 19:17:37,839 - rag.generator - INFO - Loading model: meta-llama/Llama-3-8B-Instruct
+2025-04-09 19:17:37,839 - rag.generator - INFO - Model meta-llama/Llama-3-8B-Instruct loaded successfully
+2025-04-09 19:17:37,841 - rag.generator - INFO - Loading model: meta-llama/Llama-3-8B-Instruct
+2025-04-09 19:17:37,841 - rag.generator - INFO - Model meta-llama/Llama-3-8B-Instruct loaded successfully
+2025-04-09 19:17:37,854 - platform-validator - INFO - Unit test results saved to validation_results/unit_test_results.json
+2025-04-09 19:17:37,854 - platform-validator - INFO - Running integration tests...
+2025-04-09 19:17:51,930 - platform-validator - ERROR - Integration tests failed with exit code 1
+2025-04-09 19:17:51,931 - platform-validator - ERROR - STDOUT: 
+================================================================================
+INTEGRATION TEST SUMMARY
+================================================================================
+Date: 2025-04-09T19:17:50.774880
+Duration: 0.00 seconds
+Tests Run: 1
+Passed: 0 (0.00%)
+Failed: 0
+Errors: 1
+Skipped: 0
+================================================================================
+
+FAILURES AND ERRORS:
+
+ERROR: test_end_to_end (unittest.loader._FailedTest.test_end_to_end)
+----------------------------------------
+ImportError: Failed to import test module: test_end_to_end
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/tests/integration/test_end_to_end.py", line 23, in <module>
+    from data.dataset import MultimodalDataset, create_dat...
+
+
+
+2025-04-09 19:17:51,932 - platform-validator - ERROR - STDERR: 2025-04-09 19:17:37,958 - integration-test-runner - INFO - Running integration tests from modules: tests.integration.test_end_to_end
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+test_end_to_end (unittest.loader._FailedTest.test_end_to_end) ... ERROR
+
+======================================================================
+ERROR: test_end_to_end (unittest.loader._FailedTest.test_end_to_end)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_end_to_end
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/tests/integration/test_end_to_end.py", line 23, in <module>
+    from data.dataset import MultimodalDataset, create_data_loaders
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/data/dataset.py", line 10, in <module>
+    from models.text.roberta_model import RoBERTaWrapper
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/models/__init__.py", line 12, in <module>
+    from models.optimization.onnx_export import ONNXExporter
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/models/optimization/__init__.py", line 10, in <module>
+    from models.optimization.quantization import ModelQuantizer, QuantizationConfig
+ImportError: cannot import name 'QuantizationConfig' from 'models.optimization.quantization' (/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/models/optimization/quantization.py)
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+2025-04-09 19:17:50,775 - integration-test-runner - INFO - Test results saved to validation_results/test_results.json
+
+2025-04-09 19:17:51,932 - platform-validator - INFO - Starting API server...
+2025-04-09 19:18:21,943 - platform-validator - ERROR - Failed to start API server within timeout
+2025-04-09 19:18:21,951 - platform-validator - ERROR - Failed to start API server: None
+2025-04-09 19:18:21,953 - platform-validator - INFO - Terminating API server...
+2025-04-09 19:18:21,954 - platform-validator - INFO - Generating validation report...
+2025-04-09 19:18:21,965 - platform-validator - INFO - Validation report saved to validation_results/validation_report.json and validation_results/validation_report.html
+2025-04-09 19:18:24,633 - platform-validator - INFO - Running unit tests...
+2025-04-09 19:18:37,845 - faiss.loader - INFO - Loading faiss.
+2025-04-09 19:18:37,893 - faiss.loader - INFO - Successfully loaded faiss.
+2025-04-09 19:18:37,897 - faiss - INFO - Failed to load GPU Faiss: name 'GpuIndexIVFFlat' is not defined. Will not load constructor refs for GPU indexes.
+2025-04-09 19:18:40,028 - rag.retriever - INFO - Loading retrieval model: sentence-transformers/all-MiniLM-L6-v2
+2025-04-09 19:18:40,029 - rag.retriever - INFO - Retrieval model sentence-transformers/all-MiniLM-L6-v2 loaded successfully
+2025-04-09 19:18:40,033 - rag.retriever - INFO - Loading retrieval model: sentence-transformers/all-MiniLM-L6-v2
+2025-04-09 19:18:40,033 - rag.retriever - INFO - Retrieval model sentence-transformers/all-MiniLM-L6-v2 loaded successfully
+2025-04-09 19:18:40,044 - rag.generator - INFO - Loading model: meta-llama/Llama-3-8B-Instruct
+2025-04-09 19:18:40,045 - rag.generator - INFO - Model meta-llama/Llama-3-8B-Instruct loaded successfully
+2025-04-09 19:18:40,046 - rag.generator - INFO - Loading model: meta-llama/Llama-3-8B-Instruct
+2025-04-09 19:18:40,046 - rag.generator - INFO - Model meta-llama/Llama-3-8B-Instruct loaded successfully
+2025-04-09 19:18:40,059 - platform-validator - INFO - Unit test results saved to validation_results/unit_test_results.json
+2025-04-09 19:18:40,059 - platform-validator - INFO - Running integration tests...
+2025-04-09 19:18:53,869 - platform-validator - ERROR - Integration tests failed with exit code 1
+2025-04-09 19:18:53,872 - platform-validator - ERROR - STDOUT: 
+================================================================================
+INTEGRATION TEST SUMMARY
+================================================================================
+Date: 2025-04-09T19:18:52.372347
+Duration: 0.00 seconds
+Tests Run: 1
+Passed: 0 (0.00%)
+Failed: 0
+Errors: 1
+Skipped: 0
+================================================================================
+
+FAILURES AND ERRORS:
+
+ERROR: test_end_to_end (unittest.loader._FailedTest.test_end_to_end)
+----------------------------------------
+ImportError: Failed to import test module: test_end_to_end
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/tests/integration/test_end_to_end.py", line 23, in <module>
+    from data.dataset import MultimodalDataset, create_dat...
+
+
+
+2025-04-09 19:18:53,872 - platform-validator - ERROR - STDERR: 2025-04-09 19:18:40,168 - integration-test-runner - INFO - Running integration tests from modules: tests.integration.test_end_to_end
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+test_end_to_end (unittest.loader._FailedTest.test_end_to_end) ... ERROR
+
+======================================================================
+ERROR: test_end_to_end (unittest.loader._FailedTest.test_end_to_end)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_end_to_end
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/tests/integration/test_end_to_end.py", line 23, in <module>
+    from data.dataset import MultimodalDataset, create_data_loaders
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/data/dataset.py", line 10, in <module>
+    from models.text.roberta_model import RoBERTaWrapper
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/models/__init__.py", line 12, in <module>
+    from models.optimization.onnx_export import ONNXExporter
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/models/optimization/__init__.py", line 10, in <module>
+    from models.optimization.quantization import ModelQuantizer, QuantizationConfig
+ImportError: cannot import name 'QuantizationConfig' from 'models.optimization.quantization' (/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/models/optimization/quantization.py)
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+2025-04-09 19:18:52,372 - integration-test-runner - INFO - Test results saved to validation_results/test_results.json
+
+2025-04-09 19:18:53,873 - platform-validator - INFO - Generating validation report...
+2025-04-09 19:18:53,876 - platform-validator - INFO - Validation report saved to validation_results/validation_report.json and validation_results/validation_report.html
+2025-04-09 19:18:56,378 - platform-validator - INFO - Running unit tests...
+2025-04-09 19:19:08,895 - faiss.loader - INFO - Loading faiss.
+2025-04-09 19:19:08,945 - faiss.loader - INFO - Successfully loaded faiss.
+2025-04-09 19:19:08,949 - faiss - INFO - Failed to load GPU Faiss: name 'GpuIndexIVFFlat' is not defined. Will not load constructor refs for GPU indexes.
+2025-04-09 19:19:11,051 - rag.retriever - INFO - Loading retrieval model: sentence-transformers/all-MiniLM-L6-v2
+2025-04-09 19:19:11,051 - rag.retriever - INFO - Retrieval model sentence-transformers/all-MiniLM-L6-v2 loaded successfully
+2025-04-09 19:19:11,057 - rag.retriever - INFO - Loading retrieval model: sentence-transformers/all-MiniLM-L6-v2
+2025-04-09 19:19:11,057 - rag.retriever - INFO - Retrieval model sentence-transformers/all-MiniLM-L6-v2 loaded successfully
+2025-04-09 19:19:11,067 - rag.generator - INFO - Loading model: meta-llama/Llama-3-8B-Instruct
+2025-04-09 19:19:11,067 - rag.generator - INFO - Model meta-llama/Llama-3-8B-Instruct loaded successfully
+2025-04-09 19:19:11,069 - rag.generator - INFO - Loading model: meta-llama/Llama-3-8B-Instruct
+2025-04-09 19:19:11,069 - rag.generator - INFO - Model meta-llama/Llama-3-8B-Instruct loaded successfully
+2025-04-09 19:19:11,082 - platform-validator - INFO - Unit test results saved to validation_results/unit_test_results.json
+2025-04-09 19:19:11,082 - platform-validator - INFO - Running integration tests...
+2025-04-09 19:19:23,137 - platform-validator - ERROR - Integration tests failed with exit code 1
+2025-04-09 19:19:23,137 - platform-validator - ERROR - STDOUT: 
+================================================================================
+INTEGRATION TEST SUMMARY
+================================================================================
+Date: 2025-04-09T19:19:22.256170
+Duration: 0.00 seconds
+Tests Run: 1
+Passed: 0 (0.00%)
+Failed: 0
+Errors: 1
+Skipped: 0
+================================================================================
+
+FAILURES AND ERRORS:
+
+ERROR: test_end_to_end (unittest.loader._FailedTest.test_end_to_end)
+----------------------------------------
+ImportError: Failed to import test module: test_end_to_end
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/tests/integration/test_end_to_end.py", line 23, in <module>
+    from data.dataset import MultimodalDataset, create_dat...
+
+
+
+2025-04-09 19:19:23,138 - platform-validator - ERROR - STDERR: 2025-04-09 19:19:11,204 - integration-test-runner - INFO - Running integration tests from modules: tests.integration.test_end_to_end
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+test_end_to_end (unittest.loader._FailedTest.test_end_to_end) ... ERROR
+
+======================================================================
+ERROR: test_end_to_end (unittest.loader._FailedTest.test_end_to_end)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_end_to_end
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/tests/integration/test_end_to_end.py", line 23, in <module>
+    from data.dataset import MultimodalDataset, create_data_loaders
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/data/dataset.py", line 10, in <module>
+    from models.text.roberta_model import RoBERTaWrapper
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/models/__init__.py", line 12, in <module>
+    from models.optimization.onnx_export import ONNXExporter
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/models/optimization/__init__.py", line 10, in <module>
+    from models.optimization.quantization import ModelQuantizer, QuantizationConfig
+ImportError: cannot import name 'QuantizationConfig' from 'models.optimization.quantization' (/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/models/optimization/quantization.py)
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+2025-04-09 19:19:22,256 - integration-test-runner - INFO - Test results saved to validation_results/test_results.json
+
+2025-04-09 19:19:23,138 - platform-validator - INFO - Starting API server...
+2025-04-09 19:19:53,145 - platform-validator - ERROR - Failed to start API server within timeout
+2025-04-09 19:19:53,146 - platform-validator - ERROR - Failed to start API server: None
+2025-04-09 19:19:53,146 - platform-validator - INFO - Terminating API server...
+2025-04-09 19:19:53,146 - platform-validator - INFO - Generating validation report...
+2025-04-09 19:19:53,148 - platform-validator - INFO - Validation report saved to validation_results/validation_report.json and validation_results/validation_report.html
+2025-04-09 19:19:55,768 - platform-validator - INFO - Running unit tests...
+2025-04-09 19:20:07,069 - faiss.loader - INFO - Loading faiss.
+2025-04-09 19:20:07,121 - faiss.loader - INFO - Successfully loaded faiss.
+2025-04-09 19:20:07,124 - faiss - INFO - Failed to load GPU Faiss: name 'GpuIndexIVFFlat' is not defined. Will not load constructor refs for GPU indexes.
+2025-04-09 19:20:09,709 - rag.retriever - INFO - Loading retrieval model: sentence-transformers/all-MiniLM-L6-v2
+2025-04-09 19:20:09,710 - rag.retriever - INFO - Retrieval model sentence-transformers/all-MiniLM-L6-v2 loaded successfully
+2025-04-09 19:20:09,715 - rag.retriever - INFO - Loading retrieval model: sentence-transformers/all-MiniLM-L6-v2
+2025-04-09 19:20:09,715 - rag.retriever - INFO - Retrieval model sentence-transformers/all-MiniLM-L6-v2 loaded successfully
+2025-04-09 19:20:09,726 - rag.generator - INFO - Loading model: meta-llama/Llama-3-8B-Instruct
+2025-04-09 19:20:09,727 - rag.generator - INFO - Model meta-llama/Llama-3-8B-Instruct loaded successfully
+2025-04-09 19:20:09,728 - rag.generator - INFO - Loading model: meta-llama/Llama-3-8B-Instruct
+2025-04-09 19:20:09,729 - rag.generator - INFO - Model meta-llama/Llama-3-8B-Instruct loaded successfully
+2025-04-09 19:20:09,741 - platform-validator - INFO - Unit test results saved to my_validation_results/unit_test_results.json
+2025-04-09 19:20:09,742 - platform-validator - INFO - Running integration tests...
+2025-04-09 19:20:22,013 - platform-validator - ERROR - Integration tests failed with exit code 1
+2025-04-09 19:20:22,015 - platform-validator - ERROR - STDOUT: 
+================================================================================
+INTEGRATION TEST SUMMARY
+================================================================================
+Date: 2025-04-09T19:20:21.095286
+Duration: 0.00 seconds
+Tests Run: 1
+Passed: 0 (0.00%)
+Failed: 0
+Errors: 1
+Skipped: 0
+================================================================================
+
+FAILURES AND ERRORS:
+
+ERROR: test_end_to_end (unittest.loader._FailedTest.test_end_to_end)
+----------------------------------------
+ImportError: Failed to import test module: test_end_to_end
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/tests/integration/test_end_to_end.py", line 23, in <module>
+    from data.dataset import MultimodalDataset, create_dat...
+
+
+
+2025-04-09 19:20:22,015 - platform-validator - ERROR - STDERR: 2025-04-09 19:20:09,852 - integration-test-runner - INFO - Running integration tests from modules: tests.integration.test_end_to_end
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+test_end_to_end (unittest.loader._FailedTest.test_end_to_end) ... ERROR
+
+======================================================================
+ERROR: test_end_to_end (unittest.loader._FailedTest.test_end_to_end)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_end_to_end
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/tests/integration/test_end_to_end.py", line 23, in <module>
+    from data.dataset import MultimodalDataset, create_data_loaders
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/data/dataset.py", line 10, in <module>
+    from models.text.roberta_model import RoBERTaWrapper
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/models/__init__.py", line 12, in <module>
+    from models.optimization.onnx_export import ONNXExporter
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/models/optimization/__init__.py", line 10, in <module>
+    from models.optimization.quantization import ModelQuantizer, QuantizationConfig
+ImportError: cannot import name 'QuantizationConfig' from 'models.optimization.quantization' (/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/models/optimization/quantization.py)
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+2025-04-09 19:20:21,095 - integration-test-runner - INFO - Test results saved to my_validation_results/test_results.json
+
+2025-04-09 19:20:22,015 - platform-validator - INFO - Starting API server...
+2025-04-09 19:20:52,023 - platform-validator - ERROR - Failed to start API server within timeout
+2025-04-09 19:20:52,024 - platform-validator - ERROR - Failed to start API server: None
+2025-04-09 19:20:52,024 - platform-validator - INFO - Terminating API server...
+2025-04-09 19:20:52,024 - platform-validator - INFO - Generating validation report...
+2025-04-09 19:20:52,026 - platform-validator - INFO - Validation report saved to my_validation_results/validation_report.json and my_validation_results/validation_report.html
+2025-04-09 19:20:53,733 - platform-validator - INFO - Running unit tests...
+2025-04-09 19:21:10,832 - faiss.loader - INFO - Loading faiss.
+2025-04-09 19:21:10,889 - faiss.loader - INFO - Successfully loaded faiss.
+2025-04-09 19:21:10,893 - faiss - INFO - Failed to load GPU Faiss: name 'GpuIndexIVFFlat' is not defined. Will not load constructor refs for GPU indexes.
+2025-04-09 19:21:13,152 - rag.retriever - INFO - Loading retrieval model: sentence-transformers/all-MiniLM-L6-v2
+2025-04-09 19:21:13,152 - rag.retriever - INFO - Retrieval model sentence-transformers/all-MiniLM-L6-v2 loaded successfully
+2025-04-09 19:21:13,157 - rag.retriever - INFO - Loading retrieval model: sentence-transformers/all-MiniLM-L6-v2
+2025-04-09 19:21:13,158 - rag.retriever - INFO - Retrieval model sentence-transformers/all-MiniLM-L6-v2 loaded successfully
+2025-04-09 19:21:13,167 - rag.generator - INFO - Loading model: meta-llama/Llama-3-8B-Instruct
+2025-04-09 19:21:13,167 - rag.generator - INFO - Model meta-llama/Llama-3-8B-Instruct loaded successfully
+2025-04-09 19:21:13,169 - rag.generator - INFO - Loading model: meta-llama/Llama-3-8B-Instruct
+2025-04-09 19:21:13,169 - rag.generator - INFO - Model meta-llama/Llama-3-8B-Instruct loaded successfully
+2025-04-09 19:21:13,182 - platform-validator - INFO - Unit test results saved to validation_results/unit_test_results.json
+2025-04-09 19:21:13,182 - platform-validator - INFO - Running integration tests...
+2025-04-09 19:21:26,301 - platform-validator - ERROR - Integration tests failed with exit code 1
+2025-04-09 19:21:26,302 - platform-validator - ERROR - STDOUT: 
+================================================================================
+INTEGRATION TEST SUMMARY
+================================================================================
+Date: 2025-04-09T19:21:25.256726
+Duration: 0.00 seconds
+Tests Run: 1
+Passed: 0 (0.00%)
+Failed: 0
+Errors: 1
+Skipped: 0
+================================================================================
+
+FAILURES AND ERRORS:
+
+ERROR: test_end_to_end (unittest.loader._FailedTest.test_end_to_end)
+----------------------------------------
+ImportError: Failed to import test module: test_end_to_end
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/tests/integration/test_end_to_end.py", line 23, in <module>
+    from data.dataset import MultimodalDataset, create_dat...
+
+
+
+2025-04-09 19:21:26,302 - platform-validator - ERROR - STDERR: 2025-04-09 19:21:13,292 - integration-test-runner - INFO - Running integration tests from modules: tests.integration.test_end_to_end
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+test_end_to_end (unittest.loader._FailedTest.test_end_to_end) ... ERROR
+
+======================================================================
+ERROR: test_end_to_end (unittest.loader._FailedTest.test_end_to_end)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_end_to_end
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/tests/integration/test_end_to_end.py", line 23, in <module>
+    from data.dataset import MultimodalDataset, create_data_loaders
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/data/dataset.py", line 10, in <module>
+    from models.text.roberta_model import RoBERTaWrapper
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/models/__init__.py", line 12, in <module>
+    from models.optimization.onnx_export import ONNXExporter
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/models/optimization/__init__.py", line 10, in <module>
+    from models.optimization.quantization import ModelQuantizer, QuantizationConfig
+ImportError: cannot import name 'QuantizationConfig' from 'models.optimization.quantization' (/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/models/optimization/quantization.py)
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+2025-04-09 19:21:25,257 - integration-test-runner - INFO - Test results saved to validation_results/test_results.json
+
+2025-04-09 19:21:26,302 - platform-validator - INFO - Starting API server...
+2025-04-09 19:21:56,312 - platform-validator - ERROR - Failed to start API server within timeout
+2025-04-09 19:21:56,313 - platform-validator - ERROR - Failed to start API server: None
+2025-04-09 19:21:56,313 - platform-validator - INFO - Terminating API server...
+2025-04-09 19:21:56,314 - platform-validator - INFO - Generating validation report...
+2025-04-09 19:21:56,317 - platform-validator - INFO - Validation report saved to validation_results/validation_report.json and validation_results/validation_report.html
+2025-04-09 19:40:14,081 - platform-validator - INFO - Running unit tests...
+2025-04-09 19:40:29,435 - faiss.loader - INFO - Loading faiss.
+2025-04-09 19:40:29,539 - faiss.loader - INFO - Successfully loaded faiss.
+2025-04-09 19:40:29,543 - faiss - INFO - Failed to load GPU Faiss: name 'GpuIndexIVFFlat' is not defined. Will not load constructor refs for GPU indexes.
+2025-04-09 19:40:31,760 - rag.retriever - INFO - Loading retrieval model: sentence-transformers/all-MiniLM-L6-v2
+2025-04-09 19:40:31,761 - rag.retriever - INFO - Retrieval model sentence-transformers/all-MiniLM-L6-v2 loaded successfully
+2025-04-09 19:40:31,765 - rag.retriever - INFO - Loading retrieval model: sentence-transformers/all-MiniLM-L6-v2
+2025-04-09 19:40:31,765 - rag.retriever - INFO - Retrieval model sentence-transformers/all-MiniLM-L6-v2 loaded successfully
+2025-04-09 19:40:31,778 - rag.generator - INFO - Loading model: meta-llama/Llama-3-8B-Instruct
+2025-04-09 19:40:31,778 - rag.generator - INFO - Model meta-llama/Llama-3-8B-Instruct loaded successfully
+2025-04-09 19:40:31,780 - rag.generator - INFO - Loading model: meta-llama/Llama-3-8B-Instruct
+2025-04-09 19:40:31,780 - rag.generator - INFO - Model meta-llama/Llama-3-8B-Instruct loaded successfully
+2025-04-09 19:40:31,792 - platform-validator - INFO - Unit test results saved to validation_results/unit_test_results.json
+2025-04-09 19:40:31,792 - platform-validator - INFO - Running integration tests...
+2025-04-09 19:40:45,688 - platform-validator - ERROR - Integration tests failed with exit code 1
+2025-04-09 19:40:45,688 - platform-validator - ERROR - STDOUT: 
+================================================================================
+INTEGRATION TEST SUMMARY
+================================================================================
+Date: 2025-04-09T19:40:44.438170
+Duration: 0.00 seconds
+Tests Run: 1
+Passed: 0 (0.00%)
+Failed: 0
+Errors: 1
+Skipped: 0
+================================================================================
+
+FAILURES AND ERRORS:
+
+ERROR: test_end_to_end (unittest.loader._FailedTest.test_end_to_end)
+----------------------------------------
+ImportError: Failed to import test module: test_end_to_end
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/tests/integration/test_end_to_end.py", line 23, in <module>
+    from data.dataset import MultimodalDataset, create_dat...
+
+
+
+2025-04-09 19:40:45,689 - platform-validator - ERROR - STDERR: 2025-04-09 19:40:31,897 - integration-test-runner - INFO - Running integration tests from modules: tests.integration.test_end_to_end
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py", line 42, in tf
+    from tensorboard.compat import notf  # noqa: F401
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ImportError: cannot import name 'notf' from 'tensorboard.compat' (/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/site-packages/tensorboard/compat/__init__.py)
+
+During handling of the above exception, another exception occurred:
+
+AttributeError: 'MessageFactory' object has no attribute 'GetPrototype'
+test_end_to_end (unittest.loader._FailedTest.test_end_to_end) ... ERROR
+
+======================================================================
+ERROR: test_end_to_end (unittest.loader._FailedTest.test_end_to_end)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_end_to_end
+Traceback (most recent call last):
+  File "/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/unittest/loader.py", line 162, in loadTestsFromName
+    module = __import__(module_name)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/tests/integration/test_end_to_end.py", line 23, in <module>
+    from data.dataset import MultimodalDataset, create_data_loaders
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/data/dataset.py", line 10, in <module>
+    from models.text.roberta_model import RoBERTaWrapper
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/models/__init__.py", line 12, in <module>
+    from models.optimization.onnx_export import ONNXExporter
+  File "/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/models/optimization/__init__.py", line 10, in <module>
+    from models.optimization.quantization import ModelQuantizer, QuantizationConfig
+ImportError: cannot import name 'QuantizationConfig' from 'models.optimization.quantization' (/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/models/optimization/quantization.py)
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (errors=1)
+2025-04-09 19:40:44,438 - integration-test-runner - INFO - Test results saved to validation_results/test_results.json
+
+2025-04-09 19:40:45,689 - platform-validator - INFO - Starting API server...
+2025-04-09 19:41:25,623 - platform-validator - INFO - Running unit tests...
+2025-04-09 19:41:40,145 - faiss.loader - INFO - Loading faiss.
+2025-04-09 19:41:40,194 - faiss.loader - INFO - Successfully loaded faiss.
+2025-04-09 19:41:40,198 - faiss - INFO - Failed to load GPU Faiss: name 'GpuIndexIVFFlat' is not defined. Will not load constructor refs for GPU indexes.
+2025-04-09 19:41:42,560 - rag.retriever - INFO - Loading retrieval model: sentence-transformers/all-MiniLM-L6-v2
+2025-04-09 19:41:42,561 - rag.retriever - INFO - Retrieval model sentence-transformers/all-MiniLM-L6-v2 loaded successfully
+2025-04-09 19:41:42,565 - rag.retriever - INFO - Loading retrieval model: sentence-transformers/all-MiniLM-L6-v2
+2025-04-09 19:41:42,566 - rag.retriever - INFO - Retrieval model sentence-transformers/all-MiniLM-L6-v2 loaded successfully
+2025-04-09 19:41:42,574 - rag.generator - INFO - Loading model: meta-llama/Llama-3-8B-Instruct
+2025-04-09 19:41:42,574 - rag.generator - INFO - Model meta-llama/Llama-3-8B-Instruct loaded successfully
+2025-04-09 19:41:42,576 - rag.generator - INFO - Loading model: meta-llama/Llama-3-8B-Instruct
+2025-04-09 19:41:42,576 - rag.generator - INFO - Model meta-llama/Llama-3-8B-Instruct loaded successfully
+2025-04-09 19:41:42,588 - platform-validator - INFO - Unit test results saved to validation_results/unit_test_results.json
+2025-04-09 19:41:42,588 - platform-validator - INFO - Running integration tests...

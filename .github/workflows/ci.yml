@@ -1,0 +1,136 @@
+name: CAIP CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.9]
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+        cache: 'pip'
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        pip install pytest pytest-cov flake8 black
+    
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+    
+    - name: Check formatting with black
+      run: |
+        black --check --line-length 100 .
+    
+    - name: Run unit tests
+      run: |
+        pytest tests/ --ignore=tests/integration/ -v
+    
+    - name: Run light integration tests
+      run: |
+        python scripts/run_integration_tests.py --skip-slow --device cpu --output-dir test_results
+
+  build:
+    name: Build and Push Docker Image
+    needs: test
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev')
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Extract branch name
+      shell: bash
+      run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
+    
+    - name: Build and push
+      uses: docker/build-push-action@v4
+      with:
+        context: ./serving
+        file: ./serving/Dockerfile
+        push: true
+        tags: |
+          ghcr.io/${{ github.repository }}/caip:${{ env.BRANCH_NAME }}
+          ghcr.io/${{ github.repository }}/caip:${{ github.sha }}
+
+  deploy-dev:
+    name: Deploy to Development
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    environment: development
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install kubectl
+      uses: azure/setup-kubectl@v3
+      with:
+        version: 'latest'
+    
+    - name: Set up kubeconfig
+      run: |
+        mkdir -p $HOME/.kube
+        echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
+        chmod 600 $HOME/.kube/config
+    
+    - name: Deploy to dev environment
+      run: |
+        kubectl apply -f serving/kubernetes/
+        kubectl set image deployment/caip-audience-intelligence ray-serve=ghcr.io/${{ github.repository }}/caip:${{ github.sha }} -n nielsen-ai
+        kubectl rollout status deployment/caip-audience-intelligence -n nielsen-ai --timeout=300s
+
+  deploy-prod:
+    name: Deploy to Production
+    needs: build
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install kubectl
+      uses: azure/setup-kubectl@v3
+      with:
+        version: 'latest'
+    
+    - name: Set up kubeconfig
+      run: |
+        mkdir -p $HOME/.kube
+        echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
+        chmod 600 $HOME/.kube/config
+    
+    - name: Deploy to production environment
+      run: |
+        kubectl apply -f serving/kubernetes/
+        kubectl set image deployment/caip-audience-intelligence ray-serve=ghcr.io/${{ github.repository }}/caip:${{ github.sha }} -n nielsen-ai
+        kubectl rollout status deployment/caip-audience-intelligence -n nielsen-ai --timeout=300s 

@@ -5,7 +5,16 @@ import torch.nn.functional as F
 from typing import Dict, List, Tuple, Optional, Union, Any
 from PIL import Image
 import numpy as np
+from enum import Enum
 from transformers import CLIPFeatureExtractor, CLIPVisionModel
+
+class VisualFeatureTypes(str, Enum):
+    """Enumeration of supported visual feature types."""
+    POOLED = "pooled"
+    PATCH = "patch"
+    CLS = "cls"
+    ATTENTION = "attention"
+    REGION = "region"
 
 class VisualFeatureExtractor:
     """
@@ -16,7 +25,7 @@ class VisualFeatureExtractor:
         self,
         model_name: str = "openai/clip-vit-base-patch32",
         device: Optional[str] = None,
-        feature_type: str = "pooled",  # "pooled", "patch", "cls"
+        feature_type: Union[VisualFeatureTypes, str] = VisualFeatureTypes.POOLED,
         normalize: bool = True
     ):
         """
@@ -35,7 +44,11 @@ class VisualFeatureExtractor:
             self.device = device
         
         # Set feature extraction parameters
-        self.feature_type = feature_type
+        if isinstance(feature_type, VisualFeatureTypes):
+            self.feature_type = feature_type.value
+        else:
+            self.feature_type = feature_type
+            
         self.normalize = normalize
         
         # Load feature extractor and model

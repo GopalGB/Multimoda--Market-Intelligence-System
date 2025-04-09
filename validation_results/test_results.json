@@ -1,0 +1,19 @@
+{
+  "timestamp": "2025-04-09T19:41:57.401085",
+  "duration": 0.000252,
+  "total": 1,
+  "passed": 0,
+  "failures": 0,
+  "errors": 1,
+  "skipped": 0,
+  "details": {
+    "failures": [],
+    "errors": [
+      {
+        "test": "test_end_to_end (unittest.loader._FailedTest.test_end_to_end)",
+        "message": "ImportError: Failed to import test module: test_end_to_end\nTraceback (most recent call last):\n  File \"/Users/gopalmacbook/.pyenv/versions/3.11.6/lib/python3.11/unittest/loader.py\", line 162, in loadTestsFromName\n    module = __import__(module_name)\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/tests/integration/test_end_to_end.py\", line 23, in <module>\n    from data.dataset import MultimodalDataset, create_data_loaders\n  File \"/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/data/dataset.py\", line 10, in <module>\n    from models.text.roberta_model import RoBERTaWrapper\n  File \"/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/models/__init__.py\", line 12, in <module>\n    from models.optimization.onnx_export import ONNXExporter\n  File \"/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/models/optimization/__init__.py\", line 10, in <module>\n    from models.optimization.quantization import ModelQuantizer, QuantizationConfig\nImportError: cannot import name 'QuantizationConfig' from 'models.optimization.quantization' (/Users/gopalmacbook/Machine Learning/GitHub /Case Studies/cross_modal_audience_platform/models/optimization/quantization.py)\n\n"
+      }
+    ],
+    "skipped": []
+  }
+}
