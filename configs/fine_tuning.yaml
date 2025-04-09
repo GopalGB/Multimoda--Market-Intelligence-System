@@ -1,0 +1,49 @@
+# Model configuration
+model:
+  base_model_path: "./models/saved/fusion_model_best.pt"
+  visual_dim: 768
+  text_dim: 768
+  fusion_dim: 512
+  num_layers: 4
+  num_heads: 8
+  dropout: 0.1
+  engagement_type: "regression"
+
+# Training configuration
+training:
+  batch_size: 32
+  num_epochs: 50
+  learning_rate: 0.0001
+  weight_decay: 0.01
+  lr_scheduler: "cosine"  # options: "step", "cosine", "linear", "none"
+  warmup_steps: 100
+  early_stopping:
+    patience: 5
+    min_delta: 0.001
+  gradient_clipping: 1.0
+  
+# Data configuration
+data:
+  train_file: "./data/datasets/nielsen_content_train.csv"
+  val_file: "./data/datasets/nielsen_content_val.csv"
+  test_file: "./data/datasets/nielsen_content_test.csv"
+  text_column: "description"
+  image_column: "thumbnail_path"
+  label_column: "engagement"
+  cache_features: true
+  cache_dir: "./data/cache/features"
+  
+# Feature extraction
+features:
+  text_model: "roberta-base"
+  visual_model: "openai/clip-vit-base-patch32"
+  max_text_length: 512
+  normalize_embeddings: true
+  
+# Logging and checkpoints
+logging:
+  log_dir: "./logs/fine_tuning"
+  checkpoint_dir: "./models/checkpoints"
+  save_best_only: true
+  log_every_n_steps: 10
+  eval_every_n_steps: 100 

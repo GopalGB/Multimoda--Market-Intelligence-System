@@ -6,10 +6,14 @@ import networkx as nx
 import os
 import tempfile
 from unittest.mock import patch, MagicMock
+import pytest
+from pathlib import Path
+from typing import Dict, Tuple
 
 from causal.structural_model import CausalGraph, StructuralCausalModel
 from causal.causal_features import CausalFeatureSelector
 from causal.counterfactual import CounterfactualAnalyzer
+from tests.synthetic_data.causal_data_generator import SyntheticCausalDataGenerator
 
 
 class TestCausalGraph(unittest.TestCase):
@@ -421,6 +425,196 @@ class TestCounterfactualAnalyzer(unittest.TestCase):
             self.assertIn("factual_outcome", cf)
             self.assertIn("counterfactual_outcome", cf)
             self.assertIn("interventions", cf)
+
+
+class TestCausalInference:
+    """Test suite for causal inference components."""
+    
+    @pytest.fixture
+    def synthetic_data(self) -> Tuple[pd.DataFrame, Dict[str, float], nx.DiGraph]:
+        """Generate synthetic data for testing."""
+        generator = SyntheticCausalDataGenerator(
+            n_samples=1000,
+            n_features=5,
+            seed=42,
+            noise_level=0.1
+        )
+        
+        # Generate both linear and nonlinear data
+        linear_data, linear_effects = generator.generate_linear_data()
+        nonlinear_data, nonlinear_effects = generator.generate_nonlinear_data()
+        
+        # Combine datasets
+        combined_data = pd.concat([linear_data, nonlinear_data], axis=0)
+        combined_effects = {**linear_effects, **nonlinear_effects}
+        
+        return combined_data, combined_effects, generator.get_true_causal_graph()
+    
+    def test_structural_model_initialization(self, synthetic_data):
+        """Test initialization of structural causal model."""
+        data, effects, true_graph = synthetic_data
+        
+        model = StructuralCausalModel(
+            data=data,
+            outcome_var='Y',
+            treatment_vars=list(effects.keys())
+        )
+        
+        assert model.data is not None
+        assert model.outcome_var == 'Y'
+        assert set(model.treatment_vars) == set(effects.keys())
+    
+    def test_causal_effect_estimation(self, synthetic_data):
+        """Test causal effect estimation accuracy."""
+        data, true_effects, true_graph = synthetic_data
+        
+        model = StructuralCausalModel(
+            data=data,
+            outcome_var='Y',
+            treatment_vars=list(true_effects.keys())
+        )
+        
+        # Estimate causal effects
+        estimated_effects = model.estimate_causal_effects()
+        
+        # Compare with true effects
+        for var, true_effect in true_effects.items():
+            assert var in estimated_effects
+            # Allow for some estimation error
+            assert abs(estimated_effects[var] - true_effect) < 0.5
+    
+    def test_counterfactual_analysis(self, synthetic_data):
+        """Test counterfactual analysis functionality."""
+        data, effects, true_graph = synthetic_data
+        
+        model = StructuralCausalModel(
+            data=data,
+            outcome_var='Y',
+            treatment_vars=list(effects.keys())
+        )
+        
+        analyzer = CounterfactualAnalyzer(model)
+        
+        # Test counterfactual prediction
+        test_instance = data.iloc[0]
+        intervention = {var: 1.0 for var in effects.keys()}
+        
+        counterfactual_outcome = analyzer.predict_counterfactual(
+            instance=test_instance,
+            intervention=intervention
+        )
+        
+        assert isinstance(counterfactual_outcome, float)
+        assert not np.isnan(counterfactual_outcome)
+    
+    def test_heterogeneous_effects(self, synthetic_data):
+        """Test estimation of heterogeneous treatment effects."""
+        data, effects, true_graph = synthetic_data
+        
+        model = StructuralCausalModel(
+            data=data,
+            outcome_var='Y',
+            treatment_vars=list(effects.keys())
+        )
+        
+        # Estimate heterogeneous effects
+        het_effects = model.estimate_heterogeneous_effects()
+        
+        assert isinstance(het_effects, dict)
+        for var in effects.keys():
+            assert var in het_effects
+            assert isinstance(het_effects[var], pd.Series)
+    
+    def test_robustness_checks(self, synthetic_data):
+        """Test robustness of causal inference results."""
+        data, effects, true_graph = synthetic_data
+        
+        model = StructuralCausalModel(
+            data=data,
+            outcome_var='Y',
+            treatment_vars=list(effects.keys())
+        )
+        
+        # Perform robustness checks
+        robustness_results = model.perform_robustness_checks()
+        
+        assert isinstance(robustness_results, dict)
+        assert 'sensitivity_analysis' in robustness_results
+        assert 'placebo_tests' in robustness_results
+    
+    def test_graph_learning(self, synthetic_data):
+        """Test causal graph learning from data."""
+        data, effects, true_graph = synthetic_data
+        
+        model = StructuralCausalModel(
+            data=data,
+            outcome_var='Y',
+            treatment_vars=list(effects.keys())
+        )
+        
+        # Learn causal graph
+        learned_graph = model.learn_causal_graph()
+        
+        assert isinstance(learned_graph, nx.DiGraph)
+        # Check if key edges are recovered
+        for edge in true_graph.edges():
+            if edge[1] == 'Y':  # Focus on edges to outcome
+                assert learned_graph.has_edge(*edge)
+    
+    def test_model_persistence(self, synthetic_data, tmp_path):
+        """Test saving and loading of causal model."""
+        data, effects, true_graph = synthetic_data
+        
+        model = StructuralCausalModel(
+            data=data,
+            outcome_var='Y',
+            treatment_vars=list(effects.keys())
+        )
+        
+        # Save model
+        model_path = tmp_path / "causal_model.pkl"
+        model.save(model_path)
+        
+        # Load model
+        loaded_model = StructuralCausalModel.load(model_path)
+        
+        assert loaded_model.outcome_var == model.outcome_var
+        assert set(loaded_model.treatment_vars) == set(model.treatment_vars)
+        
+        # Compare causal effects
+        original_effects = model.estimate_causal_effects()
+        loaded_effects = loaded_model.estimate_causal_effects()
+        
+        for var in effects.keys():
+            assert abs(original_effects[var] - loaded_effects[var]) < 1e-6
+    
+    def test_invalid_inputs(self):
+        """Test handling of invalid inputs."""
+        # Test with empty data
+        with pytest.raises(ValueError):
+            StructuralCausalModel(
+                data=pd.DataFrame(),
+                outcome_var='Y',
+                treatment_vars=['X1']
+            )
+        
+        # Test with missing outcome variable
+        data = pd.DataFrame({'X1': [1, 2, 3]})
+        with pytest.raises(ValueError):
+            StructuralCausalModel(
+                data=data,
+                outcome_var='Y',
+                treatment_vars=['X1']
+            )
+        
+        # Test with invalid treatment variables
+        data = pd.DataFrame({'X1': [1, 2, 3], 'Y': [1, 2, 3]})
+        with pytest.raises(ValueError):
+            StructuralCausalModel(
+                data=data,
+                outcome_var='Y',
+                treatment_vars=['Z1']  # Non-existent variable
+            )
 
 
 if __name__ == '__main__':
