@@ -48,6 +48,7 @@ class MultimodalFusionModel(nn.Module):
             self.device = device
             
         self.engagement_type = engagement_type
+        self.num_engagement_classes = num_engagement_classes
         
         # Cross-modal transformer for fusion
         self.fusion_transformer = CrossModalTransformer(
@@ -257,20 +258,15 @@ class MultimodalFusionModel(nn.Module):
         # Extract sentiment predictions
         sentiment_scores = outputs["sentiment"].squeeze(-1)
         
-        # Map scores to sentiment categories
+        # Categorize sentiments
         sentiment_categories = []
-        for score in sentiment_scores:
-            score_val = score.item()
-            if score_val < -0.6:
-                sentiment_categories.append("very_negative")
-            elif score_val < -0.2:
+        for score in sentiment_scores.cpu().numpy():
+            if score < -0.33:
                 sentiment_categories.append("negative")
-            elif score_val < 0.2:
-                sentiment_categories.append("neutral")
-            elif score_val < 0.6:
+            elif score > 0.33:
                 sentiment_categories.append("positive")
             else:
-                sentiment_categories.append("very_positive")
+                sentiment_categories.append("neutral")
         
         return {
             "sentiment_score": sentiment_scores.cpu().numpy(),
@@ -285,7 +281,7 @@ class MultimodalFusionModel(nn.Module):
         text_padding_mask: Optional[torch.Tensor] = None
     ) -> np.ndarray:
         """
-        Extract content features for similarity comparison or clustering.
+        Extract content features for retrieval.
         
         Args:
             visual_features: Visual features [batch_size, visual_seq_len, visual_dim]
@@ -294,7 +290,7 @@ class MultimodalFusionModel(nn.Module):
             text_padding_mask: Text padding mask [batch_size, text_seq_len]
             
         Returns:
-            Content feature embeddings
+            Content feature embeddings as numpy array
         """
         # Forward pass
         outputs = self.forward(
@@ -356,3 +352,270 @@ class MultimodalFusionModel(nn.Module):
         model.load_state_dict(checkpoint["model_state_dict"])
         
         return model
+        
+    def fine_tune(
+        self,
+        train_loader: torch.utils.data.DataLoader,
+        val_loader: torch.utils.data.DataLoader,
+        epochs: int = 10,
+        learning_rate: float = 1e-4,
+        weight_decay: float = 0.01,
+        patience: int = 3,
+        scheduler_type: str = 'cosine',
+        warmup_steps: int = 100,
+        gradient_clipping: float = 1.0,
+        checkpoint_dir: Optional[str] = None,
+        log_every: int = 10
+    ) -> Dict[str, List[float]]:
+        """
+        Fine-tune the fusion model on domain-specific data.
+        
+        Args:
+            train_loader: DataLoader for training data
+            val_loader: DataLoader for validation data
+            epochs: Number of training epochs
+            learning_rate: Learning rate for optimizer
+            weight_decay: Weight decay for regularization
+            patience: Patience for early stopping
+            scheduler_type: Type of learning rate scheduler ('cosine', 'linear', 'step', None)
+            warmup_steps: Number of warmup steps for schedulers that support it
+            gradient_clipping: Maximum gradient norm for clipping
+            checkpoint_dir: Directory to save checkpoints (None to disable)
+            log_every: Log progress every N batches
+            
+        Returns:
+            Dictionary containing training history (losses and metrics)
+        """
+        import torch.optim as optim
+        from tqdm import tqdm
+        import os
+        import numpy as np
+        from sklearn.metrics import mean_squared_error, r2_score
+        
+        # Set model to training mode
+        self.train()
+        
+        # Initialize optimizer
+        optimizer = optim.AdamW(
+            self.parameters(),
+            lr=learning_rate,
+            weight_decay=weight_decay
+        )
+        
+        # Initialize loss function based on task type
+        if self.engagement_type == "regression":
+            criterion = torch.nn.MSELoss()
+        else:  # classification
+            criterion = torch.nn.CrossEntropyLoss()
+        
+        # Initialize learning rate scheduler
+        scheduler = None
+        if scheduler_type == 'cosine':
+            from transformers import get_cosine_schedule_with_warmup
+            num_training_steps = len(train_loader) * epochs
+            scheduler = get_cosine_schedule_with_warmup(
+                optimizer,
+                num_warmup_steps=warmup_steps,
+                num_training_steps=num_training_steps
+            )
+        elif scheduler_type == 'linear':
+            from transformers import get_linear_schedule_with_warmup
+            num_training_steps = len(train_loader) * epochs
+            scheduler = get_linear_schedule_with_warmup(
+                optimizer,
+                num_warmup_steps=warmup_steps,
+                num_training_steps=num_training_steps
+            )
+        elif scheduler_type == 'step':
+            scheduler = optim.lr_scheduler.StepLR(
+                optimizer, 
+                step_size=5, 
+                gamma=0.5
+            )
+        
+        # Create checkpoint directory if needed
+        if checkpoint_dir:
+            os.makedirs(checkpoint_dir, exist_ok=True)
+        
+        # Initialize variables for tracking progress
+        best_val_loss = float('inf')
+        patience_counter = 0
+        
+        # Initialize history dictionary
+        history = {
+            'train_loss': [],
+            'val_loss': [],
+            'val_mse': [],
+            'val_r2': []
+        }
+        
+        # Training loop
+        for epoch in range(epochs):
+            # Training phase
+            self.train()
+            running_loss = 0.0
+            
+            # Progress bar for training
+            train_iterator = tqdm(train_loader, desc=f"Epoch {epoch+1}/{epochs} [Train]")
+            for i, batch in enumerate(train_iterator):
+                # Get data
+                visual_features = batch['visual_features'].to(self.device)
+                text_features = batch['text_features'].to(self.device)
+                labels = batch['label'].to(self.device)
+                
+                # Zero gradients
+                optimizer.zero_grad()
+                
+                # Forward pass
+                outputs = self(visual_features, text_features)
+                
+                # Get predicted values
+                if self.engagement_type == "regression":
+                    predictions = outputs["engagement"]["score"].squeeze(-1)
+                else:  # classification
+                    predictions = outputs["engagement"]["logits"]
+                
+                # Calculate loss
+                loss = criterion(predictions, labels)
+                
+                # Backward pass
+                loss.backward()
+                
+                # Gradient clipping
+                if gradient_clipping > 0:
+                    torch.nn.utils.clip_grad_norm_(self.parameters(), gradient_clipping)
+                
+                # Update weights
+                optimizer.step()
+                
+                # Update learning rate for batch-based schedulers
+                if scheduler and scheduler_type in ['cosine', 'linear']:
+                    scheduler.step()
+                
+                # Update running loss
+                running_loss += loss.item() * visual_features.size(0)
+                
+                # Update progress bar
+                train_iterator.set_postfix(loss=loss.item())
+                
+                # Log progress
+                if i % log_every == 0:
+                    print(f"Batch {i}/{len(train_loader)}, Loss: {loss.item():.4f}")
+            
+            # Update epoch-based scheduler
+            if scheduler and scheduler_type == 'step':
+                scheduler.step()
+            
+            # Calculate epoch loss
+            epoch_loss = running_loss / len(train_loader.dataset)
+            history['train_loss'].append(epoch_loss)
+            
+            # Validation phase
+            val_loss, val_mse, val_r2, _, _ = self._validate(val_loader, criterion)
+            
+            # Record validation metrics
+            history['val_loss'].append(val_loss)
+            history['val_mse'].append(val_mse)
+            history['val_r2'].append(val_r2)
+            
+            # Print epoch results
+            print(f"Epoch {epoch+1}/{epochs}")
+            print(f"  Train Loss: {epoch_loss:.4f}")
+            print(f"  Val Loss: {val_loss:.4f}, MSE: {val_mse:.4f}, R²: {val_r2:.4f}")
+            
+            # Check for improvement
+            if val_loss < best_val_loss:
+                best_val_loss = val_loss
+                patience_counter = 0
+                
+                # Save best model checkpoint
+                if checkpoint_dir:
+                    best_model_path = os.path.join(checkpoint_dir, "best_model.pt")
+                    self.save(best_model_path)
+                    print(f"  Saved best model to {best_model_path}")
+            else:
+                patience_counter += 1
+                print(f"  No improvement for {patience_counter} epochs")
+                
+                # Early stopping
+                if patience_counter >= patience:
+                    print(f"Early stopping after {epoch+1} epochs")
+                    break
+            
+            # Save periodic checkpoint
+            if checkpoint_dir:
+                checkpoint_path = os.path.join(checkpoint_dir, f"epoch_{epoch+1}.pt")
+                torch.save({
+                    'epoch': epoch + 1,
+                    'model_state_dict': self.state_dict(),
+                    'optimizer_state_dict': optimizer.state_dict(),
+                    'train_loss': epoch_loss,
+                    'val_loss': val_loss
+                }, checkpoint_path)
+        
+        # Return training history
+        return history
+
+    def _validate(
+        self,
+        val_loader: torch.utils.data.DataLoader,
+        criterion: torch.nn.Module
+    ) -> Tuple[float, float, float, np.ndarray, np.ndarray]:
+        """
+        Validate the model on validation data.
+        
+        Args:
+            val_loader: DataLoader for validation data
+            criterion: Loss function
+            
+        Returns:
+            Tuple of (val_loss, mse, r2, predictions, labels)
+        """
+        from tqdm import tqdm
+        import numpy as np
+        from sklearn.metrics import mean_squared_error, r2_score
+        
+        # Set model to evaluation mode
+        self.eval()
+        running_loss = 0.0
+        all_predictions = []
+        all_labels = []
+        
+        # Disable gradient computation for validation
+        with torch.no_grad():
+            # Progress bar for validation
+            val_iterator = tqdm(val_loader, desc="Validation")
+            
+            for batch in val_iterator:
+                # Get data
+                visual_features = batch['visual_features'].to(self.device)
+                text_features = batch['text_features'].to(self.device)
+                labels = batch['label'].to(self.device)
+                
+                # Forward pass
+                outputs = self(visual_features, text_features)
+                
+                # Get predicted values
+                if self.engagement_type == "regression":
+                    predictions = outputs["engagement"]["score"].squeeze(-1)
+                else:  # classification
+                    predictions = torch.argmax(outputs["engagement"]["probabilities"], dim=1).float()
+                
+                # Calculate loss
+                loss = criterion(predictions, labels)
+                
+                # Update running loss
+                running_loss += loss.item() * visual_features.size(0)
+                
+                # Collect predictions and labels for metrics
+                all_predictions.extend(predictions.cpu().numpy())
+                all_labels.extend(labels.cpu().numpy())
+        
+        # Calculate validation loss
+        val_loss = running_loss / len(val_loader.dataset)
+        
+        # Calculate regression metrics
+        mse = mean_squared_error(all_labels, all_predictions)
+        r2 = r2_score(all_labels, all_predictions)
+        
+        return val_loss, mse, r2, np.array(all_predictions), np.array(all_labels)

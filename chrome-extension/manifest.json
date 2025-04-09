@@ -1,0 +1,27 @@
+{
+  "name": "Audience Intelligence Analyzer",
+  "version": "1.0",
+  "description": "Analyze content for audience engagement potential",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    }
+  },
+  "permissions": ["activeTab", "storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-script.js"]
+    }
+  ],
+  "host_permissions": [
+    "https://your-api-endpoint.com/*"
+  ]
+} 

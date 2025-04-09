@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Audience Intelligence</title>
+  <link rel="stylesheet" href="popup.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Audience Intelligence</h1>
+    </header>
+    
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="analyze">Analyze</button>
+      <button class="tab-btn" data-tab="insights">Insights</button>
+      <button class="tab-btn" data-tab="optimize">Optimize</button>
+    </div>
+    
+    <div class="tab-content" id="analyze">
+      <p class="description">Analyze the current page for audience engagement potential.</p>
+      <button id="analyzeBtn" class="primary-btn">Analyze This Page</button>
+      
+      <div id="loading" class="hidden">
+        <div class="spinner"></div>
+        <p>Analyzing content...</p>
+      </div>
+      
+      <div id="results" class="hidden">
+        <div class="engagement-score">
+          <h2>Engagement Score</h2>
+          <div class="score-meter">
+            <div class="score-value">--</div>
+            <div class="meter">
+              <div class="meter-fill" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="sentiment-score">
+          <h2>Sentiment</h2>
+          <div class="sentiment-value">--</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="tab-content hidden" id="insights">
+      <h2>Causal Factors</h2>
+      <div id="causalFactors">
+        <p class="placeholder">Analyze a page to see causal factors</p>
+        <ul id="factorsList" class="hidden"></ul>
+      </div>
+      
+      <div class="causal-graph">
+        <h2>Causal Graph</h2>
+        <div id="graphContainer" class="graph-placeholder">
+          <p>Run analysis to see causal graph</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="tab-content hidden" id="optimize">
+      <h2>Content Optimization</h2>
+      <div class="optimization-suggestions">
+        <p class="placeholder">Analyze a page to see suggestions</p>
+        <ul id="suggestionsList" class="hidden"></ul>
+      </div>
+      
+      <div class="counterfactual-analysis hidden" id="counterfactualTool">
+        <h2>What If Analysis</h2>
+        <div class="slider-container">
+          <label for="factorSlider">Adjust Factor: <span id="selectedFactor">-</span></label>
+          <input type="range" id="factorSlider" min="0" max="100" value="50">
+          <div class="predicted-outcome">
+            <span>Predicted Engagement: </span>
+            <span id="predictedOutcome">-</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <footer>
+      <div class="api-status">
+        <span id="apiStatus" class="status-indicator offline"></span>
+        <span class="status-text">API Status</span>
+      </div>
+      <button id="settingsBtn" class="icon-btn">⚙️</button>
+    </footer>
+  </div>
+  
+  <div id="settingsModal" class="modal hidden">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <h2>Settings</h2>
+      <div class="form-group">
+        <label for="apiEndpoint">API Endpoint:</label>
+        <input type="text" id="apiEndpoint" placeholder="https://your-api-endpoint.com">
+      </div>
+      <div class="form-group">
+        <label for="apiKey">API Key:</label>
+        <input type="password" id="apiKey">
+      </div>
+      <button id="saveSettingsBtn" class="primary-btn">Save Settings</button>
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html> 
